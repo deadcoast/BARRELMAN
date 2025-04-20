@@ -21,7 +21,7 @@ class TestBarrelmanLexerRenderSyntaxTree:
                 zone_3_trigger="trigger1",
                 zone_4_outcome="outcome1",
                 indent_level=0,
-                is_nesting_port=False
+                is_nesting_port=False,
             )
         ]
         lexer.render_syntax_tree()
@@ -47,7 +47,7 @@ class TestBarrelmanLexerRenderSyntaxTree:
                 zone_3_trigger=None,
                 zone_4_outcome=None,
                 indent_level=0,
-                is_nesting_port=False
+                is_nesting_port=False,
             ),
             BarrelmanToken(
                 line="line2",
@@ -57,8 +57,8 @@ class TestBarrelmanLexerRenderSyntaxTree:
                 zone_3_trigger="trigger2",
                 zone_4_outcome="outcome2",
                 indent_level=1,
-                is_nesting_port=True
-            )
+                is_nesting_port=True,
+            ),
         ]
         lexer.render_syntax_tree()
         captured = capsys.readouterr().out
@@ -93,7 +93,7 @@ class TestBarrelmanLexerRenderSyntaxTree:
                 zone_3_trigger=None,
                 zone_4_outcome=None,
                 indent_level=0,
-                is_nesting_port=False
+                is_nesting_port=False,
             )
         ]
         lexer.render_syntax_tree()
@@ -113,7 +113,7 @@ class TestBarrelmanLexerRenderSyntaxTree:
                 zone_3_trigger=None,
                 zone_4_outcome=None,
                 indent_level=0,
-                is_nesting_port=True
+                is_nesting_port=True,
             )
         ]
         lexer.render_syntax_tree()

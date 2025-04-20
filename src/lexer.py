@@ -1,5 +1,4 @@
 import argparse
-import re
 from dataclasses import dataclass
 from typing import List, Optional
 
@@ -12,6 +11,7 @@ class BarrelmanToken:
     including its declaration, relation, modifier, trigger, outcome,
     indentation level, and whether it's a nesting port.
     """
+
     line: str
     zone_1_declaration: Optional[str]
     zone_1_relation: Optional[str]
@@ -21,13 +21,15 @@ class BarrelmanToken:
     indent_level: int = 0
     is_nesting_port: bool = False
 
+
 class BarrelmanLexer:
     """Tokenizes the Barrelman source code.
-    
+
     This method iterates through each line of the source code,
     validates spacing, extracts tokens, and appends them to the
     `tokens` list.
     """
+
     def __init__(self, source: str):
         """Initializes the BarrelmanLexer.
 
@@ -43,13 +45,9 @@ class BarrelmanLexer:
         Checks for extra spacing on nested '::' blocks and ensures ':^:'
         is at the start of the line or has a single space before it.
         """
-        if line.startswith('::') and '  ::' in line:
+        if line.startswith("::") and "  ::" in line:
             return f"[Line {lineno}] ERROR: Extra spacing on nested '::' block."
-        if (
-            ':^:' in line
-            and not line.startswith(':^:')
-            and not line.startswith(' :^:')
-        ):
+        if ":^:" in line and not line.startswith(":^:") and not line.startswith(" :^:"):
             return f"[Line {lineno}] ERROR: ':^:' must be at the start of the line or have a single space before it."
         return None
 
@@ -60,9 +58,11 @@ class BarrelmanLexer:
         original line with the length of the line after removing leading
         spaces.
         """
-        return len(line) - len(line.lstrip(' '))
+        return len(line) - len(line.lstrip(" "))
 
-    def infer_outcome(self, modifier: Optional[str], trigger: Optional[str]) -> Optional[str]:
+    def infer_outcome(
+        self, modifier: Optional[str], trigger: Optional[str]
+    ) -> Optional[str]:
         """Infers the outcome based on the modifier and trigger.
 
         Constructs an outcome string based on the presence of a modifier
@@ -84,7 +84,7 @@ class BarrelmanLexer:
         `tokens` list.
         """
         for lineno, line in enumerate(self.source, start=1):
-            original_line = line.rstrip('\n')
+            original_line = line.rstrip("\n")
             stripped = original_line.lstrip()
 
             if not stripped:
@@ -95,77 +95,134 @@ class BarrelmanLexer:
                 print(spacing_error)
                 continue
 
-            is_nesting = ':^:' in stripped
-
             # Custom parsing logic for BARRELMAN syntax
             try:
-                # First extract the declaration part (:: or :^:)
-                decl_match = re.match(r'^(::+|:^:)?', stripped)
-                declaration = decl_match.group(1) if decl_match and decl_match.group(1) else None
+                # Calculate the indent level based on leading spaces
+                indent_level = len(original_line) - len(original_line.lstrip())
+
+                # Check for and extract the declaration part (:: or :^:)
+                # This handles both indented and non-indented declarations
+                stripped_line = original_line.lstrip()
+                is_nesting = False
+
+                if stripped_line.startswith("::"):
+                    declaration = "::"
+                elif stripped_line.startswith(":^:"):
+                    declaration = ":^:"
+                    is_nesting = True
+                else:
+                    declaration = None
 
                 # Remove declaration from the line
-                rest = stripped[len(declaration):].strip() if declaration else stripped
-
-                # Split on // to separate keyword from the rest
-                if '//' in rest:
-                    keyword_part, rest = rest.split('//', 1)
-                    keyword = keyword_part.strip()
-
-                    # Now parse the part after //
-                    # Handle special case with multiple //
-                    if '//' in rest:
-                        parts = rest.split('//')
-                        last_part = parts[-1].strip()
-                        rest = ''.join(parts[:-1]).strip()
-                        if '%' in last_part or '->' in last_part:
-                            rest += ' ' + last_part
-
-                    # Extract modifier (after %) and trigger (after ->)
-                    modifier = None
-                    trigger = None
-
-                    # Handle % in the remaining part
-                    if '%' in rest:
-                        rest_parts = rest.split('%', 1)
-                        relation = rest_parts[0].strip()
-                        mod_trigger = rest_parts[1].strip()
-
-                        # Check if there's a trigger after the modifier
-                        if '->' in mod_trigger:
-                            mod_parts = mod_trigger.split('->', 1)
-                            modifier = mod_parts[0].strip()
-                            trigger = mod_parts[1].strip()
-                        else:
-                            modifier = mod_trigger
-                    elif '->' in rest:
-                        # Handle case with -> but no %
-                        rest_parts = rest.split('->', 1)
-                        relation = rest_parts[0].strip()
-                        trigger = rest_parts[1].strip()
-                    else:
-                        relation = rest.strip()
-
-                    # Combine keyword and relation if both exist
-                    if relation:
-                        keyword = f"{keyword} {relation}" if keyword else relation
+                if declaration:
+                    # Extract the rest of the line without requiring a space after declaration
+                    rest = stripped_line[len(declaration):].lstrip()
                 else:
-                    # No // found, use the whole string as keyword
-                    keyword = rest
-                    modifier = None
-                    trigger = None
+                    rest = stripped_line
 
-                self.tokens.append(BarrelmanToken(
-                    line=original_line,
-                    zone_1_declaration=declaration,
-                    zone_1_relation=keyword,
-                    zone_2_modifier=modifier,
-                    zone_3_trigger=trigger,
-                    zone_4_outcome=self.infer_outcome(modifier, trigger),
-                    indent_level=self.get_indent_level(original_line),
-                    is_nesting_port=is_nesting
-                ))
+                # Initialize token components
+                relation = None
+                modifier = None
+                trigger = None
+
+                # CORRECTED PARSING LOGIC FOR BARRELMAN SYNTAX
+
+                # Step 1: Find relation marker //
+                relation_idx = rest.find("//")
+                if relation_idx != -1:
+                    # Everything before // is the KEYWORD
+                    keyword = rest[:relation_idx].strip()
+                    rest_after_relation = rest[relation_idx+2:].strip()
+
+                    # Step 2: Find modifier marker %
+                    modifier_idx = rest_after_relation.find("%")
+                    if modifier_idx != -1:
+                        # Everything between // and % is the FUNCTION
+                        function = rest_after_relation[:modifier_idx].strip()
+
+                        # Store the KEYWORD as the relation for now
+                        relation = keyword
+
+                        # If there is FUNCTION content, add it to relation
+                        if function:
+                            relation = f"{keyword} // {function}"
+
+                        # Get content after % marker - this is the PARAMETER
+                        parameter_content = rest_after_relation[modifier_idx+1:].strip(
+                        )
+
+                        # Step 3: Find trigger marker ->
+                        trigger_idx = parameter_content.find("->")
+                        if trigger_idx != -1:
+                            # Split at -> marker
+                            # This is the PARAMETER
+                            modifier = parameter_content[:trigger_idx].strip()
+                            # This is the OUTCOME
+                            trigger = parameter_content[trigger_idx+2:].strip()
+                        else:
+                            # No trigger, all is parameter
+                            modifier = parameter_content
+                    else:
+                        # No % marker, check for -> marker
+                        trigger_idx = rest_after_relation.find("->")
+                        if trigger_idx != -1:
+                            # Split at -> marker - everything before -> is FUNCTION
+                            function_part = rest_after_relation[:trigger_idx].strip(
+                            )
+                            relation = keyword
+                            if function_part:
+                                # Store function as part of relation for now
+                                relation = f"{keyword} // {function_part}"
+                            trigger = rest_after_relation[trigger_idx+2:].strip()
+                        else:
+                            # No % or ->, everything after // is FUNCTION
+                            relation = keyword
+                            if rest_after_relation:
+                                relation = f"{keyword} // {rest_after_relation}"
+                else:
+                    # No // marker, check for % marker
+                    modifier_idx = rest.find("%")
+                    if modifier_idx != -1:
+                        # Split at % marker
+                        relation = rest[:modifier_idx].strip()
+                        modifier_content = rest[modifier_idx+1:].strip()
+
+                        # Check for -> in modifier content
+                        trigger_idx = modifier_content.find("->")
+                        if trigger_idx != -1:
+                            # Split at -> marker
+                            modifier = modifier_content[:trigger_idx].strip()
+                            trigger = modifier_content[trigger_idx+2:].strip()
+                        else:
+                            # No trigger, all is modifier
+                            modifier = modifier_content
+                    else:
+                        # No // or %, check for -> marker
+                        trigger_idx = rest.find("->")
+                        if trigger_idx != -1:
+                            # Split at -> marker
+                            relation = rest[:trigger_idx].strip()
+                            trigger = rest[trigger_idx+2:].strip()
+                        else:
+                            # No markers, everything is relation
+                            relation = rest.strip()
+
+                self.tokens.append(
+                    BarrelmanToken(
+                        line=original_line,
+                        zone_1_declaration=declaration,
+                        zone_1_relation=relation,
+                        zone_2_modifier=modifier,
+                        zone_3_trigger=trigger,
+                        zone_4_outcome=self.infer_outcome(modifier, trigger),
+                        indent_level=indent_level,
+                        is_nesting_port=is_nesting,
+                    )
+                )
             except Exception as e:
-                print(f"[Line {lineno}] ERROR: Failed to parse syntax — {original_line} - {str(e)}")
+                print(
+                    f"[Line {lineno}] ERROR: Failed to parse syntax — {original_line} - {str(e)}"
+                )
 
         return self.tokens
 
@@ -176,18 +233,19 @@ class BarrelmanLexer:
         relationships between tokens based on their indentation levels
         and nesting ports.
         """
+
         def indent_prefix(level):
-            """    Generates a string prefix for indentation based on the specified level.
+            """Generates a string prefix for indentation based on the specified level.
             Parameters:
             level (int): The indentation level, where each level adds a '│   ' prefix.
-            
+
             Returns:
             str: A string representing the indentation prefix.
-            
-            Exceptions: 
+
+            Exceptions:
             None
             """
-            return '│   ' * level
+            return "│   " * level
 
         print("\nBARRELMAN SYNTAX TREE:\n")
         for token in self.tokens:
@@ -206,40 +264,84 @@ class BarrelmanLexer:
     def highlight(self):
         """
         Formats and prints highlighted syntax for each token in the tokens list.
-    
+
         Parameters:
         None
-        
+
         Returns:
         None
-        
+
         Exceptions:
         None
         """
         print("\nBARRELMAN HIGHLIGHTED SYNTAX:\n")
         for token in self.tokens:
+            indent_spaces = " " * token.indent_level
             parts = []
+
+            # Zone 1: Declaration
             if token.zone_1_declaration:
-                parts.append(f"\033[95m{token.zone_1_declaration}\033[0m")
-            parts.extend((f"\033[94m{token.zone_1_relation}\033[0m", "//"))
+                if token.is_nesting_port:
+                    # port color with proper spacing
+                    parts.append(
+                        f"{indent_spaces}\033[96m{token.zone_1_declaration}\033[0m ")
+                else:
+                    # declaration with proper spacing
+                    parts.append(
+                        f"{indent_spaces}\033[95m{token.zone_1_declaration}\033[0m ")
+
+            # Zone 1: Keyword & Relation
+            if token.zone_1_relation:
+                # Check if the relation contains a function part (indicated by '//')
+                if " // " in token.zone_1_relation:
+                    keyword, function = token.zone_1_relation.split(" // ", 1)
+                    parts.append(f"\033[94m{keyword}\033[0m")  # keyword
+                    parts.append("\033[93m // \033[0m")  # relation marker
+                    parts.append(f"\033[92m{function}\033[0m")  # function
+                else:
+                    # Just a keyword, no function
+                    parts.append(
+                        f"\033[94m{token.zone_1_relation}\033[0m")  # keyword
+                    parts.append("\033[93m // \033[0m")  # relation marker
+
+            # Zone 2: Modifier (Parameter)
             if token.zone_2_modifier:
-                parts.append(f"\033[92m% {token.zone_2_modifier}\033[0m")  # green
+                # modifier symbol with proper spacing
+                parts.append("\033[92m% \033[0m")
+                # parameter
+                parts.append(f"\033[91m{token.zone_2_modifier}\033[0m")
+
+            # Zone 3: Trigger (Outcome)
             if token.zone_3_trigger:
-                parts.append(f"\033[93m-> {token.zone_3_trigger}\033[0m")  # yellow
+                # trigger symbol with proper spacing
+                parts.append("\033[90m -> \033[0m")
+                parts.append(
+                    f"\033[89m{token.zone_3_trigger}\033[0m")  # outcome
+
             print(" ".join(parts))
+
 
 # CLI tool
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="BARRELMAN Lexer CLI")
     parser.add_argument("file", help="Input .bman file")
-    parser.add_argument("--dot", action="store_true", help="Export Graphviz .dot file")
-    parser.add_argument("--html", action="store_true", help="Export syntax highlighting as HTML")
-    parser.add_argument("--markdown", action="store_true", help="Export syntax as Markdown")
-    parser.add_argument("--highlight", action="store_true", help="Display syntax highlighted output")
-    parser.add_argument("--dark-mode", action="store_true", help="Use dark mode for HTML export")
+    parser.add_argument("--dot", action="store_true",
+                        help="Export Graphviz .dot file")
+    parser.add_argument(
+        "--html", action="store_true", help="Export syntax highlighting as HTML"
+    )
+    parser.add_argument(
+        "--markdown", action="store_true", help="Export syntax as Markdown"
+    )
+    parser.add_argument(
+        "--highlight", action="store_true", help="Display syntax highlighted output"
+    )
+    parser.add_argument(
+        "--dark-mode", action="store_true", help="Use dark mode for HTML export"
+    )
     args = parser.parse_args()
 
-    with open(args.file, 'r') as f:
+    with open(args.file, "r") as f:
         content = f.read()
 
     lexer = BarrelmanLexer(content)
@@ -247,17 +349,20 @@ if __name__ == "__main__":
 
     if args.highlight:
         lexer.highlight()
-    
+
     if args.html:
         from src.exporters.html_exporter import export_html
+
         export_html(tokens, options={"dark_mode": args.dark_mode})
-    
+
     if args.markdown:
         from src.exporters.markdown_exporter import export_markdown
+
         export_markdown(tokens)
-    
+
     if args.dot:
         from src.exporters.graphviz.dot_exporter import export_dot_graph
+
         export_dot_graph(tokens)
-    
+
     lexer.render_syntax_tree()

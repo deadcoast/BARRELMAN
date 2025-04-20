@@ -11,6 +11,7 @@ def setup_lexer():
     """Fixture to set up a BarrelmanLexer instance with no tokens."""
     return BarrelmanLexer("")
 
+
 @pytest.mark.happy_path
 class TestBarrelmanLexerHighlight:
     def test_highlight_with_full_token(self, setup_lexer):
@@ -23,7 +24,7 @@ class TestBarrelmanLexerHighlight:
                 zone_1_relation="relate",
                 zone_2_modifier="modify",
                 zone_3_trigger="trigger",
-                zone_4_outcome="outcome"
+                zone_4_outcome="outcome",
             )
         ]
         # Capture the output
@@ -31,7 +32,7 @@ class TestBarrelmanLexerHighlight:
         sys.stdout = captured_output
         lexer.highlight()
         sys.stdout = sys.__stdout__
-        
+
         # Check that output contains expected elements
         output = captured_output.getvalue()
         assert "BARRELMAN HIGHLIGHTED SYNTAX" in output
@@ -49,7 +50,7 @@ class TestBarrelmanLexerHighlight:
                 zone_1_relation="relate",
                 zone_2_modifier=None,
                 zone_3_trigger="trigger",
-                zone_4_outcome=None
+                zone_4_outcome=None,
             )
         ]
         # Capture the output
@@ -57,12 +58,13 @@ class TestBarrelmanLexerHighlight:
         sys.stdout = captured_output
         lexer.highlight()
         sys.stdout = sys.__stdout__
-        
+
         # Check that output contains expected elements
         output = captured_output.getvalue()
         assert "BARRELMAN HIGHLIGHTED SYNTAX" in output
         assert "relate" in output
         assert "trigger" in output
+
 
 @pytest.mark.edge_case
 class TestBarrelmanLexerHighlightEdgeCases:
@@ -75,7 +77,7 @@ class TestBarrelmanLexerHighlightEdgeCases:
         sys.stdout = captured_output
         lexer.highlight()
         sys.stdout = sys.__stdout__
-        
+
         # Check that output contains expected elements
         output = captured_output.getvalue()
         assert "BARRELMAN HIGHLIGHTED SYNTAX" in output
@@ -91,7 +93,7 @@ class TestBarrelmanLexerHighlightEdgeCases:
                 zone_1_relation=None,
                 zone_2_modifier=None,
                 zone_3_trigger=None,
-                zone_4_outcome=None
+                zone_4_outcome=None,
             )
         ]
         # Capture the output
@@ -99,7 +101,7 @@ class TestBarrelmanLexerHighlightEdgeCases:
         sys.stdout = captured_output
         lexer.highlight()
         sys.stdout = sys.__stdout__
-        
+
         # Check that output contains expected elements
         output = captured_output.getvalue()
         assert "BARRELMAN HIGHLIGHTED SYNTAX" in output
@@ -115,7 +117,7 @@ class TestBarrelmanLexerHighlightEdgeCases:
                 zone_1_relation="relate",
                 zone_2_modifier=None,
                 zone_3_trigger="trigger",
-                zone_4_outcome=None
+                zone_4_outcome=None,
             )
         ]
         # Capture the output
@@ -123,7 +125,7 @@ class TestBarrelmanLexerHighlightEdgeCases:
         sys.stdout = captured_output
         lexer.highlight()
         sys.stdout = sys.__stdout__
-        
+
         # Check that output contains expected elements
         output = captured_output.getvalue()
         assert "BARRELMAN HIGHLIGHTED SYNTAX" in output

@@ -55,5 +55,6 @@ class TestBarrelmanLexerInit:
         assert lexer.source == ["line 1", "line 2"]
         assert lexer.tokens == []
 
+
 # To run these tests, use the command: pytest -v --tb=short
 # To run these tests, use the command: pytest -v --tb=short

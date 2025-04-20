@@ -1,0 +1,52 @@
+{
+    "theme": "default",
+    "recent_files": [],
+    "default_paths": {
+        "bman_files": "./",
+        "export_directory": "./exports"
+    },
+    "export_defaults": {
+        "html": {
+            "enabled": true,
+            "dark_mode": false
+        },
+        "markdown": {
+            "enabled": false
+        },
+        "dot": {
+            "enabled": false
+        }
+    },
+    "preview_server": {
+        "port": 5000,
+        "auto_reload": true
+    },
+    "ui_settings": {
+        "show_line_numbers": true,
+        "auto_highlight": true,
+        "confirm_exit": true
+    },
+    "themes": {
+        "default": {
+            "border_style": "bold magenta",
+            "title_style": "bold cyan",
+            "option_style": "bold white",
+            "highlight_style": "bold yellow",
+            "text_style": "white"
+        },
+        "dark": {
+            "border_style": "bold white",
+            "title_style": "bold green",
+            "option_style": "bold white",
+            "highlight_style": "bold red",
+            "text_style": "white"
+        },
+        "light": {
+            "border_style": "bold black",
+            "title_style": "bold blue",
+            "option_style": "bold black",
+            "highlight_style": "bold blue",
+            "text_style": "black"
+        }
+    }
+}

@@ -112,8 +112,7 @@ DEFAULT_IGNORE = [
     "eslint-output.json",
     "*.snap",
     ".pixelArtAssets",
-    ".assets"
-    "docs"
+    ".assets" "docs",
 ]
 
 

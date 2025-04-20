@@ -4,8 +4,9 @@ import re
 import sys
 
 ZONE_REGEX = re.compile(
-    r'^(\s*)(::|:\^:)?\s*(.*?)\s*//\s*(.*?)\s*(%\s+[^->\n]+)?\s*(->\s+.+)?$'
+    r"^(\s*)(::|:\^:)?\s*(.*?)\s*//\s*(.*?)\s*(%\s+[^->\n]+)?\s*(->\s+.+)?$"
 )
+
 
 def parse_line(line):
     """Parses a single line of BARRELMAN syntax.
@@ -31,8 +32,9 @@ def parse_line(line):
         "zone1": decl.strip(),
         "zone2": rel.strip(),
         "zone3": (mod or "").strip()[1:].strip() if mod else "",
-        "zone4": (trig or "").strip()[2:].strip() if trig else ""
+        "zone4": (trig or "").strip()[2:].strip() if trig else "",
     }
+
 
 def align(tokens):
     """Aligns the tokens into formatted lines.
@@ -57,6 +59,7 @@ def align(tokens):
         part4 = f"-> {t['zone4']}" if t["zone4"] else ""
         lines.append(f"{t['indent']}{part1} {part2}{part3}{part4}".rstrip())
     return lines
+
 
 def format_content(content):
     """Formats the given BARRELMAN content.
@@ -86,6 +89,7 @@ def format_content(content):
         tokens.append(parsed)
     return align(tokens)
 
+
 def main():
     """Main function for the BARRELMAN formatter.
 
@@ -95,8 +99,12 @@ def main():
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("file", help=".bman file to format")
-    parser.add_argument("--check", action="store_true", help="Check if file is properly formatted")
-    parser.add_argument("--fix", action="store_true", help="Auto-fix and overwrite file")
+    parser.add_argument(
+        "--check", action="store_true", help="Check if file is properly formatted"
+    )
+    parser.add_argument(
+        "--fix", action="store_true", help="Auto-fix and overwrite file"
+    )
     args = parser.parse_args()
 
     with open(args.file) as f:
@@ -120,6 +128,7 @@ def main():
         print(f"[FIXED] {args.file}")
     else:
         print(formatted)
+
 
 if __name__ == "__main__":
     main()

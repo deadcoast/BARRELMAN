@@ -109,5 +109,6 @@ class TestBarrelmanLexerTokenize:
         assert tokens[0].zone_2_modifier == "modifier"
         assert tokens[0].zone_3_trigger == "trigger"
 
+
 # To run these tests, use the command: pytest -v
 # To run these tests, use the command: pytest -v

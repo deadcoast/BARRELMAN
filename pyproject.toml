@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "barrelman-tools"
 version = "1.0.0"
-description = "CLI tooling for the BARRELMAN syntax format"
+description = "CLI tooling for the BARRELMAN syntax format with interactive interface"
 readme = "README.md"
 authors = [{ name = "Barrelman Project" }]
 requires-python = ">=3.8"
@@ -17,14 +17,21 @@ classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Text Processing :: Markup",
     "Framework :: Flask",
+    "Environment :: Console",
 ]
 dependencies = [
-    "flask", # For preview_server.py
-    "rich",  # For syntax highlighting in terminal
+    "flask>=2.0.0",               # For preview_server.py
+    "rich>=12.0.0",               # For syntax highlighting in terminal and TUI
+    "prompt-toolkit>=3.0.0",      # For interactive CLI
+    "fuzzywuzzy>=0.18.0",         # For fuzzy search in CLI
+    "python-Levenshtein>=0.12.0", # Speed up fuzzywuzzy
+    "pdfkit>=1.0.0",              # For PDF export
+    "requests>=2.25.0",           # For API calls
 ]
 
 [project.scripts]
 barrelman = "cli:run_cli"
+barrelman-tui = "cli:main"                # New interactive TUI entry point
 bmanlint = "github_actions.bmanlint:main"
 bmanfmt = "github_actions.bmanfmt:main"
 
@@ -41,10 +48,62 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "static" = ["**/*"]
+"templates" = ["**/*.html", "**/*.jinja"]
 
 # Development Dependencies
 [project.optional-dependencies]
-dev = ["black", "isort", "flake8", "pylint", "mypy", "pytest", "pytest-cov"]
+dev = [
+    "black",
+    "isort",
+    "flake8",
+    "pylint",
+    "mypy",
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+]
+
+# CLI Configuration
+[tool.barrelman.cli]
+default_theme = "default"
+default_export_format = "html"
+preview_server_port = 5000
+auto_highlight = true
+show_line_numbers = true
+confirm_exit = true
+
+# Available CLI themes
+[tool.barrelman.themes.default]
+border_style = "bold magenta"
+title_style = "bold cyan"
+option_style = "bold white"
+highlight_style = "bold yellow"
+text_style = "white"
+
+[tool.barrelman.themes.dark]
+border_style = "bold white"
+title_style = "bold green"
+option_style = "bold white"
+highlight_style = "bold red"
+text_style = "white"
+
+[tool.barrelman.themes.light]
+border_style = "bold black"
+title_style = "bold blue"
+option_style = "bold black"
+highlight_style = "bold blue"
+text_style = "black"
+
+# Export preferences
+[tool.barrelman.exports.html]
+enabled = true
+dark_mode = false
+
+[tool.barrelman.exports.markdown]
+enabled = false
+
+[tool.barrelman.exports.dot]
+enabled = false
 
 # Black Configuration
 [tool.black]
@@ -102,7 +161,7 @@ disallow_untyped_defs = true
 disallow_incomplete_defs = true
 
 [[tool.mypy.overrides]]
-module = ["flask.*"]
+module = ["flask.*", "rich.*", "prompt_toolkit.*", "fuzzywuzzy.*", "pdfkit.*"]
 ignore_missing_imports = true
 
 # pytest Configuration

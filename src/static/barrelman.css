@@ -1,15 +1,41 @@
-/* BARRELMAN Syntax Highlighting */
+/* BARRELMAN Syntax Highlighting with CSS Variables */
+
+:root {
+    /* Define color variables for easy customization */
+    --declaration-color: #e11f8d;      /* Zone 1.1: Declaration (::) */
+    --keyword-color: #9580FF;          /* Zone 1.2: Keyword (after declaration) */
+    --relation-color: #8aff80;         /* Zone 1.3: Relation (//) */
+
+    --cause-color: #F49D1A;            /* Zone 2.1: Cause (word/phrase in Zone 2) */
+    --function-color: #ff71ce;         /* Zone 2.2: Function (after relation) */
+    --modifier-symbol-color: #FFD23F;  /* Zone 2.3: Modifier symbol (%) */
+
+    --effect-color: #C5E898;           /* Zone 3.1: Effect (word/phrase in Zone 3) */
+    --parameter-color: #8caaee;        /* Zone 3.2: Parameter (after modifier) */
+    --trigger-symbol-color: #e11f8d;   /* Zone 3.3: Trigger symbol (->) */
+    
+    --outcome-color: #9580FF;          /* Zone 4.1: Outcome (entire phrase) */
+    
+    --port-color: #00ffff;             /* Special: Port (:^:) */
+    --comment-color: #888;             /* Comments */
+    
+    /* Background colors */
+    --dark-bg: #111;
+    --light-bg: #f9f9f9;
+    --dark-text: #eee;
+    --light-text: #222;
+}
 
 /* Light mode */
 body.light {
-    background: #f9f9f9;
-    color: #222;
+    background: var(--light-bg);
+    color: var(--light-text);
 }
 
 /* Dark mode */
 body.dark {
-    background: #111;
-    color: #eee;
+    background: var(--dark-bg);
+    color: var(--dark-text);
 }
 
 /* Common styles */
@@ -20,49 +46,90 @@ body {
 }
 
 pre {
-    white-space: pre-wrap;
+    white-space: pre;
     margin: 0;
     padding: 0;
 }
 
 /* Entry container */
-.entry {
-    margin-bottom: 0.5em;
+.entry, .line {
+    margin: 0;
+    padding: 0;
     display: block;
-    white-space: nowrap;
+    white-space: pre;
+    line-height: 1.2;
 }
 
 /* Keep everything on one line */
-.declaration, .relation, .modifier, .trigger, .port {
+.declaration, .keyword, .relation, .cause, .function, .modifier-symbol, .effect, 
+.parameter, .trigger-symbol, .outcome, .port {
     display: inline;
     white-space: nowrap;
 }
 
-/* Syntax elements */
+/* ZONE 1: DECLARATION ZONE */
 .declaration {
-    color: magenta;
+    color: var(--declaration-color);
+}
+
+.keyword {
+    color: var(--keyword-color);
 }
 
 .relation {
-    color: teal;
+    color: var(--relation-color);
 }
 
+/* ZONE 2: CAUSE ZONE */
+.cause {
+    color: var(--cause-color);
+}
+
+.function {
+    color: var(--function-color);
+}
+
+.modifier-symbol {
+    color: var(--modifier-symbol-color);
+    margin-left: 0.5em;
+}
+
+/* ZONE 3: EFFECT ZONE */
+.effect {
+    color: var(--effect-color);
+}
+
+.parameter {
+    color: var(--parameter-color);
+}
+
+.trigger-symbol {
+    color: var(--trigger-symbol-color);
+    margin-left: 0.5em;
+}
+
+/* ZONE 4: OUTCOME ZONE */
+.outcome {
+    color: var(--outcome-color);
+}
+
+/* SPECIAL ELEMENTS */
+.port {
+    color: var(--port-color);
+}
+
+.comment {
+    color: var(--comment-color);
+    font-style: italic;
+}
+
+/* For backward compatibility */
 .modifier {
-    color: green;
+    color: var(--modifier-symbol-color);
     margin-left: 0.5em;
 }
 
 .trigger {
-    color: orange;
+    color: var(--trigger-symbol-color);
     margin-left: 0.5em;
-}
-
-/* Additional elements */
-.port {
-    color: #66ccff;
-}
-
-.comment {
-    color: #888;
-    font-style: italic;
 } 

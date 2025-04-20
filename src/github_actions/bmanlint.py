@@ -32,6 +32,7 @@ def lint_file(path):
     print(f"[OK] {path}")
     return 0
 
+
 def main():
     """Main function for the BARRELMAN linter.
 
@@ -46,6 +47,7 @@ def main():
     errors = sum(lint_file(file) for file in args.files)
     if errors:
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

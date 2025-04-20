@@ -1,7 +1,7 @@
 def export_html(tokens, filename="barrelman_syntax.html", options=None):
     """
     Export BARRELMAN tokens to HTML format
-    
+
     Args:
         tokens: List of BarrelmanToken objects
         filename: Output filename
@@ -13,7 +13,7 @@ def export_html(tokens, filename="barrelman_syntax.html", options=None):
 
     dark_mode = options.get("dark_mode", False)
 
-    with open(filename, 'w') as f:
+    with open(filename, "w") as f:
         _dark_mode_html(f, dark_mode, tokens)
     print(f"HTML exported to {filename}")
 
@@ -46,9 +46,13 @@ def _dark_mode_html(f, dark_mode, tokens):
         # Write declaration and relation
         if token.zone_1_declaration:
             if token.zone_1_relation:
-                f.write(f"<span class='declaration'>{indent}{token.zone_1_declaration}</span> <span class='relation'>{token.zone_1_relation} //</span>")
+                f.write(
+                    f"<span class='declaration'>{indent}{token.zone_1_declaration}</span> <span class='relation'>{token.zone_1_relation} //</span>"
+                )
             else:
-                f.write(f"<span class='declaration'>{indent}{token.zone_1_declaration}</span> <span class='relation'> //</span>")
+                f.write(
+                    f"<span class='declaration'>{indent}{token.zone_1_declaration}</span> <span class='relation'> //</span>"
+                )
         elif token.zone_1_relation:
             f.write(f"<span class='relation'>{indent}{token.zone_1_relation} //</span>")
         else:

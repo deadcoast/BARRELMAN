@@ -4,6 +4,8 @@ import os
 from src.lexer import BarrelmanLexer
 
 TESTS_DIR = "./testcases"
+
+
 def run_tests():
     """Runs the BARRELMAN test suite.
 
@@ -37,6 +39,7 @@ def run_tests():
                 results["fail"] += 1
     print(f"Passed: {results['pass']} | Failed: {results['fail']}")
     exit(results["fail"])
+
 
 if __name__ == "__main__":
     run_tests()

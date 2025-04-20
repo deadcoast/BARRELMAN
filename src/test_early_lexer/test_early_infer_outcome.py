@@ -3,13 +3,16 @@ import pytest
 from src.lexer import BarrelmanLexer
 
 
-@pytest.mark.parametrize("modifier, trigger, expected", [
-    # Happy path tests
-    ("mod1", "trig1", "Outcome inferred from % mod1 -> trig1"),
-    ("mod2", None, "Modifier only outcome: mod2"),
-    (None, "trig2", "Trigger only outcome: trig2"),
-    (None, None, None),
-])
+@pytest.mark.parametrize(
+    "modifier, trigger, expected",
+    [
+        # Happy path tests
+        ("mod1", "trig1", "Outcome inferred from % mod1 -> trig1"),
+        ("mod2", None, "Modifier only outcome: mod2"),
+        (None, "trig2", "Trigger only outcome: trig2"),
+        (None, None, None),
+    ],
+)
 @pytest.mark.happy_path
 def test_infer_outcome_happy_paths(modifier, trigger, expected):
     """
@@ -19,13 +22,21 @@ def test_infer_outcome_happy_paths(modifier, trigger, expected):
     result = lexer.infer_outcome(modifier, trigger)
     assert result == expected
 
-@pytest.mark.parametrize("modifier, trigger, expected", [
-    # Edge case tests
-    ("", "trig3", "Trigger only outcome: trig3"),  # Empty modifier
-    ("mod3", "", "Modifier only outcome: mod3"),  # Empty trigger
-    ("", "", None),  # Both empty
-    ("mod4", "trig4", "Outcome inferred from % mod4 -> trig4"),  # Both non-empty but valid
-])
+
+@pytest.mark.parametrize(
+    "modifier, trigger, expected",
+    [
+        # Edge case tests
+        ("", "trig3", "Trigger only outcome: trig3"),  # Empty modifier
+        ("mod3", "", "Modifier only outcome: mod3"),  # Empty trigger
+        ("", "", None),  # Both empty
+        (
+            "mod4",
+            "trig4",
+            "Outcome inferred from % mod4 -> trig4",
+        ),  # Both non-empty but valid
+    ],
+)
 @pytest.mark.edge_case
 def test_infer_outcome_edge_cases(modifier, trigger, expected):
     """
@@ -34,6 +45,7 @@ def test_infer_outcome_edge_cases(modifier, trigger, expected):
     lexer = BarrelmanLexer("")
     result = lexer.infer_outcome(modifier, trigger)
     assert result == expected
+
 
 class TestBarrelmanLexerInferOutcome:
     """
