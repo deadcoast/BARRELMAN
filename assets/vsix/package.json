@@ -1,0 +1,48 @@
+{
+  "name": "barrelman-syntax",
+  "displayName": "BARRELMAN Syntax Highlighting",
+  "description": "Syntax support and themes for BARRELMAN declarative syntax",
+  "version": "1.0.0",
+  "publisher": "barrelman",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Languages",
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "BARRELMAN Dark",
+        "uiTheme": "vs-dark",
+        "path": "./barrelman-theme-dark.json"
+      },
+      {
+        "label": "BARRELMAN Light",
+        "uiTheme": "vs",
+        "path": "./barrelman-theme-light.json"
+      }
+    ],
+    "languages": [
+      {
+        "id": "barrelman",
+        "aliases": [
+          "BARRELMAN",
+          "barrelman"
+        ],
+        "extensions": [
+          ".bman"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "barrelman",
+        "scopeName": "source.barrelman",
+        "path": "./barrelman.tmLanguage.json"
+      }
+    ]
+  }
+}

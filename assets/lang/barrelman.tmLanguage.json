@@ -1,0 +1,34 @@
+{
+  "name": "Barrelman",
+  "scopeName": "source.barrelman",
+  "patterns": [
+    {
+      "match": "::",
+      "name": "keyword.control.barrelman.line"
+    },
+    {
+      "match": "://",
+      "name": "keyword.control.barrelman.error"
+    },
+    {
+      "match": ":[\\^]:",
+      "name": "keyword.control.barrelman.port"
+    },
+    {
+      "match": "//",
+      "name": "keyword.control.barrelman.relation"
+    },
+    {
+      "match": "%",
+      "name": "keyword.control.barrelman.modifier"
+    },
+    {
+      "match": "->",
+      "name": "keyword.control.barrelman.trigger"
+    }
+  ],
+  "fileTypes": [
+    "bman"
+  ],
+  "uuid": "barrelman-001"
+}

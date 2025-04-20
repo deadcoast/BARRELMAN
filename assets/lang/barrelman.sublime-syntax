@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Barrelman
+file_extensions:
+  - bman
+scope: source.barrelman
+contexts:
+  main:
+    - match: '::'
+      scope: keyword.control.barrelman.line
+    - match: '://'
+      scope: invalid.illegal.barrelman
+    - match: ':[\^]:'
+      scope: keyword.control.barrelman.port
+    - match: '//'
+      scope: keyword.control.barrelman.relation
+    - match: '%'
+      scope: keyword.control.barrelman.modifier
+    - match: '->'
+      scope: keyword.control.barrelman.trigger

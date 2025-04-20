@@ -1,0 +1,31 @@
+name: Barrelman Check
+
+on:
+  push:
+    paths: ["**.bman"]
+  pull_request:
+    paths: ["**.bman"]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: pip install .
+
+      - name: Validate .bman Syntax
+        run: |
+          for f in $(find . -name "*.bman"); do
+            python -m lexer "$f" || exit 1
+          done
+
+      - name: Check Formatting
+        run: |
+          for f in $(find . -name "*.bman"); do
+            formatted=$(python bmanfmt.py "$f")
+            diff <(cat "$f") <(echo "$formatted") || (echo "[STYLE ERROR] $f not formatted" && exit 1)
+          done

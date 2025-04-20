@@ -1,0 +1,42 @@
+{
+  "name": "Barrelman Theme",
+  "type": "light",
+  "colors": {
+    "editor.background": "#ffffff",
+    "editor.foreground": "#2d2d2d"
+  },
+  "tokenColors": [
+    {
+      "scope": "keyword.control.barrelman.line",
+      "settings": {
+        "foreground": "#ff79c6",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": "keyword.control.barrelman.port",
+      "settings": {
+        "foreground": "#ffb86c",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": "keyword.control.barrelman.relation",
+      "settings": {
+        "foreground": "#8be9fd"
+      }
+    },
+    {
+      "scope": "keyword.control.barrelman.modifier",
+      "settings": {
+        "foreground": "#50fa7b"
+      }
+    },
+    {
+      "scope": "keyword.control.barrelman.trigger",
+      "settings": {
+        "foreground": "#f1fa8c"
+      }
+    }
+  ]
+}

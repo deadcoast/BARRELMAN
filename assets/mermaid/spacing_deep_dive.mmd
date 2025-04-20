@@ -1,0 +1,38 @@
+flowchart TD
+    subgraph "HIERARCHICAL NESTING SYNTAX"
+        direction TB
+        NewLineString[":: New Line String"] -->|"Starts hierarchy"| FirstLevel["First level content"]
+        NewLineString -->|"Double space indent"| NewLineString2[":: Second level\n(when no nesting port)"]
+        NewLineString -->|"Single space indent"| NestingPort[":^: Nesting Port"] 
+        NestingPort -->|"References above keywords"| AboveKeywords["Referenced content"]
+        NestingPort -->|"Single space indent"| NewLineStringAfterPort[":: String after port"]
+    end
+    
+    subgraph "EXAMPLE STRUCTURE"
+        direction TB
+        Threat[":: THREAT // AWAKENING CANDIDATE RACE % [2]"] -->|"Single space"| RacePort[":^: RACE[2] // STATUS % CRITICAL"]
+        RacePort -->|"Single space"| Race1[":: RACE[2] // AWAKENING % DENIED"]
+        RacePort -->|"Single space"| Race2[":: RACE[2] // DANGER LEVEL % ABSOLUTE"]
+        RacePort -->|"Single space"| Race3[":: RACE[2] // HOMEWORLD STATUS % DESTROYED"]
+        Threat -->|"Connects blocks"| IntentPort[":^: INTENT // SPECIES PRESERVATION"]
+        IntentPort -->|"Single space"| Target[":: TARGET ACQUISITION // EARTH BIOSPHERE"]
+        IntentPort -->|"Single space"| EarthStatus[":: EARTH STATUS // SELECTED FOR RECLAMATION"]
+    end
+    
+    subgraph "SPACING RULES"
+        direction TB
+        Rule1["New Line String (::)\nDouble space when alone"] 
+        Rule2["Nesting Port (:^:)\nSingle space indent"] 
+        Rule3["After Nesting Port\nSingle space indent"]
+        Rule4["^ operator must align\nwith first colon in string"]
+    end
+    
+    style NewLineString fill:#f96,stroke:#333,stroke-width:2px,color:black
+    style NestingPort fill:#96f,stroke:#333,stroke-width:2px,color:black
+    style Threat fill:#f96,stroke:#333,stroke-width:2px,color:black
+    style RacePort fill:#96f,stroke:#333,stroke-width:2px,color:black
+    style IntentPort fill:#96f,stroke:#333,stroke-width:2px,color:black
+    style Rule1 fill:#ffd,stroke:#333,stroke-width:2px,color:black
+    style Rule2 fill:#ffd,stroke:#333,stroke-width:2px,color:black
+    style Rule3 fill:#ffd,stroke:#333,stroke-width:2px,color:black
+    style Rule4 fill:#ffd,stroke:#333,stroke-width:2px,color:black

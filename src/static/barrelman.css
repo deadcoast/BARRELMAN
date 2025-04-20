@@ -1,0 +1,68 @@
+/* BARRELMAN Syntax Highlighting */
+
+/* Light mode */
+body.light {
+    background: #f9f9f9;
+    color: #222;
+}
+
+/* Dark mode */
+body.dark {
+    background: #111;
+    color: #eee;
+}
+
+/* Common styles */
+body {
+    font-family: monospace;
+    padding: 1em;
+    line-height: 1.2;
+}
+
+pre {
+    white-space: pre-wrap;
+    margin: 0;
+    padding: 0;
+}
+
+/* Entry container */
+.entry {
+    margin-bottom: 0.5em;
+    display: block;
+    white-space: nowrap;
+}
+
+/* Keep everything on one line */
+.declaration, .relation, .modifier, .trigger, .port {
+    display: inline;
+    white-space: nowrap;
+}
+
+/* Syntax elements */
+.declaration {
+    color: magenta;
+}
+
+.relation {
+    color: teal;
+}
+
+.modifier {
+    color: green;
+    margin-left: 0.5em;
+}
+
+.trigger {
+    color: orange;
+    margin-left: 0.5em;
+}
+
+/* Additional elements */
+.port {
+    color: #66ccff;
+}
+
+.comment {
+    color: #888;
+    font-style: italic;
+} 
