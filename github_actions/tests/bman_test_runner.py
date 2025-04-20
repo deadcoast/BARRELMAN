@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
-import traceback
-from lexer import BarrelmanLexer
+
+from src.lexer import BarrelmanLexer
 
 TESTS_DIR = "./testcases"
 def run_tests():
@@ -32,4 +32,5 @@ def run_tests():
     exit(results["fail"])
 
 if __name__ == "__main__":
+    run_tests()
     run_tests()

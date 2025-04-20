@@ -5,20 +5,44 @@ BARRELMAN SYNTAX PROCESSING SYSTEM ARCHITECTURE
 Project Structure
 
 ```
-src/
+/Users/deadcoast/_coding_/python/BARRELMAN/src
 ├── exporters/
+│   ├── graphviz/
+│   │   ├── __init__.py
+│   │   └── dot_exporter.py
+│   ├── test_early_html_exporter/
+│   │   ├── __init__.py
+│   │   ├── test_early__dark_mode_html.py
+│   │   └── test_early_export_html.py
+│   ├── test_early_markdown_exporter/
+│   │   ├── __init__.py
+│   │   └── test_early_export_markdown.py
+│   ├── __init__.py
 │   ├── html_exporter.py
-│   ├── markdown_exporter.py
-│   └── dot_exporter.py
+│   └── markdown_exporter.py
 ├── static/
-│   ├── barrelman.css
-│   └── graphviz/
-│       └── dot_exporter.py
+│   └── barrelman.css
+├── test_early_cli/
+│   ├── __init__.py
+│   └── test_early_run_cli.py
+├── test_early_lexer/
+│   ├── __init__.py
+│   ├── test_early___init__.py
+│   ├── test_early_get_indent_level.py
+│   ├── test_early_highlight.py
+│   ├── test_early_render_syntax_tree.py
+│   ├── test_early_tokenize.py
+│   └── test_early_validate_spacing_.py
+├── test_early_preview_server/
+│   ├── __init__.py
+│   └── test_early_run_preview_server.py
+├── __init__.py
+├── barrelman.bman
 ├── cli.py
 ├── lexer.py
 ├── main.py
 ├── preview_server.py
-└── README.md
+└── tree.py
 ```
 
 ⸻

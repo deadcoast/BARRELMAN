@@ -153,26 +153,111 @@ INCORRECT: Nesting String must ALWAYS be double spaced unless a HEIRARCHAL NESTI
 ```barrel
 ----
 
-1. First New Line String
-2. First Nesting Port
-3. ^ Heirarchal Modifier Port that connects the above String
-4. Beginning of Second New Line String, Connecting through ([2]) First Nesting Port
-5. Beginning of Second Nesting Port, Connecting ([1], [2], [3], [4]) all nesting strings.
+[A] `::` First New Line String
+[B] `:^:` First Nesting Port
+[C] `::` Beginning of Second New Line String, Connecting through ([2]) First Nesting Port
+[D] `:^:` Heirarchal Modifier Port that connects [A] Line String with [B],[C]
+[E] `:^:` Beginning of Second Nesting Port, Connecting ([A], [B], [C], [D]) all nesting strings.
 
-12345
-::<------- [1] NEW LINE STRING, STARTS THE NESTING STRING
-│:^: <---- [2],[3] FIRST NESTING PORT, BRIDGES NEW CALL LINE AND SECOND NESTING PORT
-││ │
-││:: <---- [4] SECOND SET OF NEW LINE STRINGS
-││::
-:^: <----- ACTS AS A NEW LINE STRING, CONNECTING NESTING STRINGS/PORT 1, 2, AND 3
-│ │
-│::
-│::
+| 1234
+| ::    <--[A] CONNECTS [1],[2] --> [B], [D]
+| │:^:  <--[B] CONNECTS [2],[3],[4] --> [C],[D],[E]
+| ││ │
+| ││::  <--[C] CONNECTS [3],[4] --> [B],[D]
+| ││::
+| :^:   <--[D] CONNECTS [1],[2],[3] --> [A],[B],[C],[E]
+|   │
+|  ::   <--[E] CONNECTS [3],[4] --> [C],[D]
+|  ::
+|______
+```
 
-----
+```barrel
+[A] `::` First New Line String
+[B] `:^:` First Nesting Port
+[C] `::` Beginning of Second New Line String, Connecting through ([2]) First Nesting Port
+[D] `:^:` Heirarchal Modifier Port that connects [A] Line String with [B],[C]
+[E] `:^:` Beginning of Second Nesting Port, Connecting ([A], [B], [C], [D]) all nesting strings.
+┌───┬───┬───┬───┐
+│ 1 │ 2 │ 3 │ 4 │
+└─┬─┴─┬─┴─┬─┴─┬─┘
+  ⇣   ⇣   ⇡   ⇣
+  ┌───┐   │   │
+  : A :   ⇡   ⇣  <--[A] CONNECTS [1],[2] --> [B], [D]
+  ├───┤   │   │
+  ⇣   ⇣   ⇡   ⇣
+  │   ┌───^───┐
+  ⇣   :   B   :  <--[B] CONNECTS [2],[3],[4] --> [C],[D],[E]
+  │   ├───┬───┤
+  ⇣   ⇡   ⇡   ⇣
+  │   │   ┌───┐
+  ⇣   ⇡   : C :  <--[C] CONNECTS [3],[4] --> [B],[D]
+  │   │   └───┘
+  ⇣   ⇡   ⇡   ⇣
+  │   │   ┌───┐
+  ⇣   ⇡   : C :  <--[C] CONNECTS [3],[4] --> [B],[D]
+  │   │   └───┘
+  ⇣   ⇡   ⇣   ⇣
+  ┌───^───┐   │
+  :   D   :   ⇣  <--[D] CONNECTS [1],[2],[3] --> [A],[B],[C],[E]
+  ├───┬───┤   │
+  ⇣   ⇡   ⇣   ⇣
+  │   ┌───┐   │
+  ⇣   : E :   ⇣  <--[E] CONNECTS [3],[4] --> [C],[D]
+  │   └───┘   │
+  ⇣   ⇡   ⇣   ⇣
+  │   ┌───┐   │
+  ⇣   : E :   ⇣  <--[E] CONNECTS [3],[4] --> [C],[D]
+  │   └───┘   │
+  ⇣   ⇡   ⇣   ⇣
+```
+
+```barrel
+[A] `::` First New Line String
+[B] `:^:` First Nesting Port
+[C] `::` Beginning of Second New Line String, Connecting through ([2]) First Nesting Port
+[D] `:^:` Heirarchal Modifier Port that connects [A] Line String with [B],[C]
+[E] `:^:` Beginning of Second Nesting Port, Connecting ([A], [B], [C], [D]) all nesting strings.
+┌─┐ ┌─┐ ┌─┐ ┌─┐
+│1│ │2│ │3│ │4│
+└┬┘ └┬┘ └┬┘ └┬┘
+ ├───┼───┼───┤
+ │   │   ▲   │
+ +───+   │   │
+ : A :   ▲   │  <--[A] CONNECTS [1],[2] --> [B], [D]
+ +───+   │   │
+ ▼   ▼   ▲   │
+ ├───┼───┼───┤
+ ▼   ▼   ▲   │
+ │   +───^───+
+ ▼   :   B   :  <--[B] CONNECTS [2],[3],[4] --> [C],[D],[E]
+ │   +───+───+
+ ▼   ▲   ▲   ▼
+ │   │   +───+
+ │   ▲   : C :  <--[C] CONNECTS [3],[4] --> [B],[D]
+ │   │   +───+
+ ▼   ▲   +───+
+ │   │   : C :  <--[C] CONNECTS [3],[4] --> [B],[D]
+ │   ▲   +───+
+ ▼   │   ▼   ▼
+ +───^───+   │
+ :   D   :   │  <--[D] CONNECTS [1],[2],[3] --> [A],[B],[C],[E]
+ +───:───+   │
+ ▼   ▲   ▼   ▼
+ │   +───+   │
+ │   : E :   │  <--[E] CONNECTS [3],[4] --> [C],[D]
+ │   +───+   │
+ ▼   ▲   ▼   ▼
+ │   +───+   │
+ │   : E :   │  <--[E] CONNECTS [3],[4] --> [C],[D]
+ │   +───+   │
+ ▼   ▲   ▼   ▼
+```
+
+```barrel
+------------
 IN PRACTICE:
----
+------------
 
 :: THREAT // AWAKENING CANDIDATE RACE % [2]
  :^: RACE[2] // STATUS % CRITICAL -> PLANETARY SYSTEM FAILURE [SELF-INITIATED]

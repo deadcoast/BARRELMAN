@@ -1,87 +1,202 @@
-⸻
+# BARRELMAN Syntax Documentation
 
-✅ Zone [4.1] Outcome Inference
-• Outcomes are automatically inferred based on modifier and trigger combinations.
-• Rendered in the syntax tree as:
+## Overview
 
-└── Outcome: Outcome inferred from % MODIFIER -> TRIGGER
+BARRELMAN is a hierarchical syntax language designed for relational data structures. This README documents the syntax structure, rules, and practical usage examples.
 
-⸻
-
-Graphviz Export with Styling
-• Nodes are colored based on function:
-• lightblue for :^: ports
-• lightgrey for standard declarations
-• Labels show % Modifier, -> Trigger, and [Outcome]
-• Run export:
-
-```bash
-python barrelman_lexer.py example.bman --dot
-dot -Tpng barrelman_tree.dot -o tree.png
-```
-
-⸻
-
-CLI Tool for .bman Files
-• Usage:
-
-```bash
-python barrelman_lexer.py your_file.bman
-python barrelman_lexer.py your_file.bman --dot
-```
-
-⸻
-
-### HIERARCHICAL NESTING PORT STRUCTURE
-
-1. First New Line String
-2. First Nesting Port
-3. ^ Hierarchical Modifier Port that connects the above String
-4. Beginning of Second New Line String, Connecting through ([2]) First Nesting Port
-5. Beginning of Second Nesting Port, Connecting ([1], [2], [3], [4]) all nesting strings.
+## Syntax Line Zones
 
 ```
----------------------------------------------------
-STRUCTURE WITH BAR CONNECTING VISUAL REPRESENTATION
----------------------------------------------------
-
-1234
-::
-│:^:
-││ │
-││::
-││::
-:^:
-││
-│::
-│::
-
-`::` = NESTING STRING
-`:^:` = NESTING PORT
-`│` = VISUAL BAR REPRESENTATION FOR CONNECTION POINTS
+┌─────┐                   ┌─────┐                ┌─────┐                ┌─────┐
+│ [1] │                   │ [2] │                │ [3] │                │ [4] │
+├─────┴───────────────────┼─────┴────────────────┼─────┴────────────────┼─────┴─────────────────┐
+│  [1.1] DECLARATION      │  [2.1] CAUSE         │  [3.1] EFFECT        │  [4.1] OUTCOME        │
+├─────────────────────────┼──────────────────────┼──────────────────────┼───────────────────────┤
+│  [1.2] KEYWORD          │  [2.2] FUNCTION      │  [3.2] PARAMATER     │                       │
+├─────────────────────────┼──────────────────────┼──────────────────────┼───────────────────────┤
+│  [1.3] RELATION         │  [2.3] MODIFIER      │  [3.3] TRIGGER       │                       │
+├─────────────────────────┼──────────────────────┼──────────────────────┼───────────────────────┤
+│  [1.4] NEW LINE         │                      │                      │                       │
+├┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┤
+│                                                                                               │
+│             [1.3]                                                                             │
+│               ^                                                                               │
+│         [1.2] │             [2.3]         [3.3]                                               │
+│           ^   │               ^             ^                                                 │
+│     [1.1] │   │       [2.2]   │      [3.2]  │                                                 │
+│       ^   │   │         ^     │        ^    │                     [4.1]                       │
+│ [1.4] │   │   │   [2.1] │     │  [3.1] │    │                      ^                          │
+│   ^   │   │   │     ^   │     │    ^   │    │                      │                          │
+│ ┌─┼───┴───┼───┼─┐ ┌─┴───┼─────┼─┐ ┌┴───┼────┼─┐ ┌──────────────────┴────────────────────────┐ │
+│ │ +       +   + │ │     +     + │ │    +    + │ │                                           │ │
+│ │ :: RACE[2] // │ │ AWAKENING % │ │ DENIED -> │ │ PLANETARY SYSTEM FAILURE [SELF-INITIATED] │ │
+├─┴───────────────┴─┴─────────────┴─┴───────────┴─┴───────────────────────────────────────────┴─┤
+│                                                                                               │
+│         :: RACE[2] // AWAKENING % DENIED -> PLANETARY SYSTEM FAILURE [SELF-INITIATED]         │
+│                                                                                               │
+└───────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-```
--------------
-ACTUAL SYNTAX
--------------
-1234
-::
- :^:
-  ::
-  ::
-:^:
- ::
- ::
+## Core Symbols and Functions
 
------------------------------
-# ACTUAL SYNTAX FUNCTIONALITY
------------------------------
+| Symbol | Function        | Semantic Meaning                        |
+| ------ | --------------- | --------------------------------------- |
+| `//`   | **Relation**    | "X is related to Y" or "X applies to Y" |
+| `%`    | **Modifier**    | "Result of this relation or condition"  |
+| `->`   | **Trigger**     | "Outcome of Relation and Trigger"       |
+| `::`   | New Line String | "New Line Strings for Advanced Nesting" |
+| `:^:`  | Port            | "Hierarchical Port"                     |
+
+## BARRELMAN Core Concepts
+
+- `::` marks the beginning of a new line
+- `//` functions as a `Relation` operator, connecting concepts
+- `%` functions as a `Modifier` operator
+- `->` functions as a `Trigger` operator, indicating outcomes
+
+### Basic Syntax Example
+
+```barrel
+:: RACE[2] // AWAKENING % DENIED -> PLANETARY SYSTEM FAILURE [SELF-INITIATED]
+```
+
+This means:
+
+- Race 2, in Relation to AWAKENING, has Modifier: DENIED, which Triggered PLANETARY SYSTEM FAILURE [SELF-INITIATED]
+
+## Hierarchical Nesting Structure
+
+![Hierarchy Diagram](assets/img/hierarchy-color.png)
+
+### Hierarchical Nesting Port (`:^:`)
+
+The Hierarchical Nesting Port is a vertical operator `^` inserted into a New Call String to reference keywords from above lines.
+
+### Nesting Rules
+
+1. **When using `:^:` (Hierarchical Nesting Port)**:
+
+   - Single space indentation
+   - PORT OPERATOR `^` must align with the first colon in New Line String
+
+2. **When using only `::` (New Line String)**:
+   - Double space indentation
+
+### Examples of Correct Nesting
+
+```barrel
+:: INTELLIGENCE // EARTH NOT RARE % HUMAN RARE
+ :^: EARTH // 1 OF 302,973 % BIRTH CONSCIOUS LIFEFORM
+  :: EARTH // 1 OF 1 % ESCAPE PLANETARY SILENCE
+```
+
+```barrel
+:: INTELLIGENCE // EARTH NOT RARE % HUMAN RARE
+  :: EARTH // 1 OF 302,973 % BIRTH CONSCIOUS LIFEFORM
+  :: EARTH // 1 OF 1 % ESCAPE PLANETARY SILENCE
+```
+
+### Examples of Incorrect Nesting
+
+```barrel
+:: INTELLIGENCE // EARTH NOT RARE % HUMAN RARE
+  :^: EARTH // 1 OF 302,973 % BIRTH CONSCIOUS LIFEFORM    # ERROR: Too many spaces before `:^:`
+    :: EARTH // 1 OF 1 % ESCAPE PLANETARY SILENCE         # ERROR: Too many spaces
+```
+
+```barrel
+:: INTELLIGENCE // EARTH NOT RARE % HUMAN RARE
+ :: EARTH // 1 OF 302,973 % BIRTH CONSCIOUS LIFEFORM      # ERROR: Single space without `:^:`
+ :: EARTH // 1 OF 1 % ESCAPE PLANETARY SILENCE            # ERROR: Single space without `:^:`
+```
+
+```html
+<!-- BARRELMAN STRUCTURE - GitHub Safe Version -->
+<pre>
+┌───┬───┬───┬───┐
+│ 1 │ 2 │ 3 │ 4 │
+└─┬─┴─┬─┴─┬─┴─┬─┘
+  ⇣   ⇣   ⇡   ⇣
+  ┌───┐   │   │
+  : A :   ⇡   ⇣  <--[A] CONNECTS [1],[2] --> [B], [D]
+  ├───┤   │   │
+  ⇣   ⇣   ⇡   ⇣
+  │   ┌───^───┐
+  ⇣   :   B   :  <--[B] CONNECTS [2],[3],[4] --> [C],[D],[E]
+  │   ├───┬───┤
+  ⇣   ⇡   ⇡   ⇣
+  │   │   ┌───┐
+  ⇣   ⇡   : C :  <--[C] CONNECTS [3],[4] --> [B],[D]
+  │   │   └───┘
+  ⇣   ⇡   ⇡   ⇣
+  │   │   ┌───┐
+  ⇣   ⇡   : C :  <--[C] CONNECTS [3],[4] --> [B],[D]
+  │   │   └───┘
+  ⇣   ⇡   ⇣   ⇣
+  ┌───^───┐   │
+  :   D   :   ⇣  <--[D] CONNECTS [1],[2],[3] --> [A],[B],[C],[E]
+  ├───┬───┤   │
+  ⇣   ⇡   ⇣   ⇣
+  │   ┌───┐   │
+  ⇣   : E :   ⇣  <--[E] CONNECTS [3],[4] --> [C],[D]
+  │   └───┘   │
+  ⇣   ⇡   ⇣   ⇣
+  │   ┌───┐   │
+  ⇣   : E :   ⇣  <--[E] CONNECTS [3],[4] --> [C],[D]
+  │   └───┘   │
+  ⇣   ⇡   ⇣   ⇣
+</pre>
+```
+
+## Practical Usage Example
+
+```barrel
 :: THREAT // AWAKENING CANDIDATE RACE % [2]
  :^: RACE[2] // STATUS % CRITICAL -> PLANETARY SYSTEM FAILURE [SELF-INITIATED]
   :: RACE[2] // AWAKENING % DENIED
   :: RACE[2] // DANGER LEVEL % ABSOLUTE -> INTERGALACTIC TRAVEL ACHIEVED
+  :: RACE[2] // HOMEWORLD STATUS % DESTROYED
+  :: RACE[2] // AWAKENING STATUS % DENIED
+  :: RACE[2] // INTERGALACTIC MOBILITY % CONFIRMED
+  :: RACE[2] // BIOSPHERE REQUIREMENT % URGENT
 :^: INTENT // SPECIES PRESERVATION % ANY MEANS NECESSARY
  :: TARGET ACQUISITION // EARTH BIOSPHERE % HABITABLE MATCH
  :: EARTH STATUS // SELECTED FOR RECLAMATION
+ :: HUMAN SURVIVAL CONDITIONAL % INTERVENTION BY BARRELMAN // LOCKED
+ :: UNLOCK CONDITION % DEMONSTRATE KEY AWARENESS ≥ 44TH PERCENTILE
 ```
+
+## Syntax Zone Details
+
+### Zone 1: Declaration
+
+- First zone of the syntax line
+- Contains:
+  - KEYWORD
+  - RELATION `//`
+  - NEWLINE IDENTIFIER `::`
+- Must begin with `::`
+- Must end with relation identifier `//`
+- If repeated keyword, must indent two spaces
+
+### Zone 2: Cause
+
+- Second zone of the syntax line
+- Contains:
+  - FUNCTION
+  - MODIFIER `%`
+
+### Zone 3: Effect
+
+- Third zone of the syntax line
+- Contains:
+  - PARAMETER
+  - TRIGGER `->`
+
+### Zone 4: Outcome
+
+- Final zone containing the result or outcome
+
+## Further Resources
+
+For more complex examples and advanced usage, refer to the complete documentation.

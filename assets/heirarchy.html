@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BARRELMAN Layout</title>
+        <style>
+            :root {
+                --bg-color: #111;
+                --text-color: #eee;
+                --border-color: #444;
+                --highlight: #5f5;
+                --error: #f55;
+                --arrow-up: #5f5;
+                --arrow-down: #f55;
+                --connection: #88f;
+            }
+
+            body.light {
+                --bg-color: #fdfdfd;
+                --text-color: #111;
+                --border-color: #ccc;
+                --highlight: #070;
+                --error: #c00;
+                --arrow-up: #080;
+                --arrow-down: #c33;
+                --connection: #37f;
+            }
+
+            body {
+                background-color: var(--bg-color);
+                color: var(--text-color);
+                font-family: monospace;
+                padding: 2rem;
+                font-size: 1rem;
+                line-height: 1.4;
+                transition: background 0.3s, color 0.3s;
+            }
+
+            button {
+                margin-bottom: 1rem;
+                padding: 0.5rem 1rem;
+                font-family: monospace;
+                cursor: pointer;
+                background-color: var(--border-color);
+                color: var(--text-color);
+                border: none;
+                border-radius: 4px;
+            }
+
+            pre {
+                padding: 1rem;
+                background: #1a1a1a;
+                border: 1px solid var(--border-color);
+                border-radius: 0.5rem;
+                box-shadow: 0 0 10px #000;
+                overflow-x: auto;
+                position: relative;
+            }
+
+            .arrow {
+                animation: pulseArrow 1.5s infinite;
+                display: inline-block;
+            }
+
+            .arrow.down {
+                color: var(--arrow-down);
+            }
+
+            .arrow.up {
+                color: var(--arrow-up);
+            }
+
+            .connector {
+                color: var(--connection);
+            }
+
+            @keyframes pulseArrow {
+
+                0%,
+                100% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                50% {
+                    opacity: 0.3;
+                    transform: translateY(-0.2em);
+                }
+            }
+
+            .comment {
+                color: var(--connection);
+            }
+        </style>
+    </head>
+
+    <body>
+        <button onclick="toggleTheme()">Toggle Light/Dark Theme</button>
+        <pre>
+┌───┬───┬───┬───┐
+│ 1 │ 2 │ 3 │ 4 │
+└─┬─┴─┬─┴─┬─┴─┬─┘
+  <span class="arrow down">⇣</span>   <span class="arrow down">⇣</span>   <span class="arrow up">⇡</span>   <span class="arrow down">⇣</span>
+  ┌───┐   │   │
+  <span class="connector">: A :</span>   <span class="arrow up">⇡</span>   <span class="arrow down">⇣</span>  <--[A] CONNECTS [1],[2] --> [B], [D]
+  ├───┤   │   │
+  <span class="arrow down">⇣</span>   <span class="arrow down">⇣</span>   <span class="arrow up">⇡</span>   <span class="arrow down">⇣</span>
+  │   ┌───<span class="arrow up">^</span>───┐
+  <span class="arrow down">⇣</span>   <span class="connector">:   B   :</span>  <--[B] CONNECTS [2],[3],[4] --> [C],[D],[E]
+  │   ├───┬───┤
+  <span class="arrow down">⇣</span>   <span class="arrow up">⇡</span>   <span class="arrow up">⇡</span>   <span class="arrow down">⇣</span>
+  │   │   ┌───┐
+  <span class="arrow down">⇣</span>   <span class="arrow up">⇡</span>   <span class="connector">: C :</span>  <--[C] CONNECTS [3],[4] --> [B],[D]
+  │   │   └───┘
+  <span class="arrow down">⇣</span>   <span class="arrow up">⇡</span>   <span class="arrow up">⇡</span>   <span class="arrow down">⇣</span>
+  │   │   ┌───┐
+  <span class="arrow down">⇣</span>   <span class="arrow up">⇡</span>   <span class="connector">: C :</span>  <--[C] CONNECTS [3],[4] --> [B],[D]
+  │   │   └───┘
+  <span class="arrow down">⇣</span>   <span class="arrow up">⇡</span>   <span class="arrow down">⇣</span>   <span class="arrow down">⇣</span>
+  ┌───<span class="arrow up">^</span>───┐   │
+  <span class="connector">:   D   :</span>   <span class="arrow down">⇣</span>  <--[D] CONNECTS [1],[2],[3] --> [A],[B],[C],[E]
+  ├───┬───┤   │
+  <span class="arrow down">⇣</span>   <span class="arrow up">⇡</span>   <span class="arrow down">⇣</span>   <span class="arrow down">⇣</span>
+  │   ┌───┐   │
+  <span class="arrow down">⇣</span>   <span class="connector">: E :</span>   <span class="arrow down">⇣</span>  <--[E] CONNECTS [3],[4] --> [C],[D]
+  │   └───┘   │
+  <span class="arrow down">⇣</span>   <span class="arrow up">⇡</span>   <span class="arrow down">⇣</span>   <span class="arrow down">⇣</span>
+  │   ┌───┐   │
+  <span class="arrow down">⇣</span>   <span class="connector">: E :</span>   <span class="arrow down">⇣</span>  <--[E] CONNECTS [3],[4] --> [C],[D]
+  │   └───┘   │
+  <span class="arrow down">⇣</span>   <span class="arrow up">⇡</span>   <span class="arrow down">⇣</span>   <span class="arrow down">⇣</span>
+</pre>
+
+        <script>
+            function toggleTheme ()
+            {
+                document.body.classList.toggle( 'light' );
+            }
+        </script>
+    </body>
+
+</html>

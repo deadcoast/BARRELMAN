@@ -1,0 +1,43 @@
+<!-- BARRELMAN STRUCTURE - GitHub Safe Version -->
+
+<pre>
+┌───┬───┬───┬───┐
+│ 1 │ 2 │ 3 │ 4 │
+└─┬─┴─┬─┴─┬─┴─┬─┘
+  ⇣   ⇣   ⇡   ⇣
+  ┌───┐   │   │
+  : A :   ⇡   ⇣  <--[A] CONNECTS [1],[2] --> [B], [D]
+  ├───┤   │   │
+  ⇣   ⇣   ⇡   ⇣
+  │   ┌───^───┐
+  ⇣   :   B   :  <--[B] CONNECTS [2],[3],[4] --> [C],[D],[E]
+  │   ├───┬───┤
+  ⇣   ⇡   ⇡   ⇣
+  │   │   ┌───┐
+  ⇣   ⇡   : C :  <--[C] CONNECTS [3],[4] --> [B],[D]
+  │   │   └───┘
+  ⇣   ⇡   ⇡   ⇣
+  │   │   ┌───┐
+  ⇣   ⇡   : C :  <--[C] CONNECTS [3],[4] --> [B],[D]
+  │   │   └───┘
+  ⇣   ⇡   ⇣   ⇣
+  ┌───^───┐   │
+  :   D   :   ⇣  <--[D] CONNECTS [1],[2],[3] --> [A],[B],[C],[E]
+  ├───┬───┤   │
+  ⇣   ⇡   ⇣   ⇣
+  │   ┌───┐   │
+  ⇣   : E :   ⇣  <--[E] CONNECTS [3],[4] --> [C],[D]
+  │   └───┘   │
+  ⇣   ⇡   ⇣   ⇣
+  │   ┌───┐   │
+  ⇣   : E :   ⇣  <--[E] CONNECTS [3],[4] --> [C],[D]
+  │   └───┘   │
+  ⇣   ⇡   ⇣   ⇣
+</pre>
+
+<!--
+This version uses only plain <pre> formatting.
+Safe for GitHub README.md display.
+No styles, animations, or scripts included.
+Embed this in your README.md directly.
+-->
