@@ -110,43 +110,7 @@ The Hierarchical Nesting Port is a vertical operator `^` inserted into a New Cal
  :: EARTH // 1 OF 1 % ESCAPE PLANETARY SILENCE            # ERROR: Single space without `:^:`
 ```
 
-```html
-<!-- BARRELMAN STRUCTURE - GitHub Safe Version -->
-<pre>
-┌───┬───┬───┬───┐
-│ 1 │ 2 │ 3 │ 4 │
-└─┬─┴─┬─┴─┬─┴─┬─┘
-  ⇣   ⇣   ⇡   ⇣
-  ┌───┐   │   │
-  : A :   ⇡   ⇣  <--[A] CONNECTS [1],[2] --> [B], [D]
-  ├───┤   │   │
-  ⇣   ⇣   ⇡   ⇣
-  │   ┌───^───┐
-  ⇣   :   B   :  <--[B] CONNECTS [2],[3],[4] --> [C],[D],[E]
-  │   ├───┬───┤
-  ⇣   ⇡   ⇡   ⇣
-  │   │   ┌───┐
-  ⇣   ⇡   : C :  <--[C] CONNECTS [3],[4] --> [B],[D]
-  │   │   └───┘
-  ⇣   ⇡   ⇡   ⇣
-  │   │   ┌───┐
-  ⇣   ⇡   : C :  <--[C] CONNECTS [3],[4] --> [B],[D]
-  │   │   └───┘
-  ⇣   ⇡   ⇣   ⇣
-  ┌───^───┐   │
-  :   D   :   ⇣  <--[D] CONNECTS [1],[2],[3] --> [A],[B],[C],[E]
-  ├───┬───┤   │
-  ⇣   ⇡   ⇣   ⇣
-  │   ┌───┐   │
-  ⇣   : E :   ⇣  <--[E] CONNECTS [3],[4] --> [C],[D]
-  │   └───┘   │
-  ⇣   ⇡   ⇣   ⇣
-  │   ┌───┐   │
-  ⇣   : E :   ⇣  <--[E] CONNECTS [3],[4] --> [C],[D]
-  │   └───┘   │
-  ⇣   ⇡   ⇣   ⇣
-</pre>
-```
+![Hierarchy Diagram](assets/img/hierarchy-color.png)
 
 ## Practical Usage Example
 
