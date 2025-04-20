@@ -1,13 +1,26 @@
 #!/usr/bin/env python3
-import sys
-import re
 import argparse
+import re
+import sys
 
 ZONE_REGEX = re.compile(
     r'^(\s*)(::|:\^:)?\s*(.*?)\s*//\s*(.*?)\s*(%\s+[^->\n]+)?\s*(->\s+.+)?$'
 )
 
 def parse_line(line):
+    """Parses a single line of BARRELMAN syntax.
+
+    This function takes a line of BARRELMAN syntax and parses it into its
+    constituent parts, returning a dictionary containing the extracted
+    information.
+
+    Args:
+        line: The line of BARRELMAN syntax to parse.
+
+    Returns:
+        A dictionary containing the parsed information, or None if the line
+        does not match the expected syntax.
+    """
     match = ZONE_REGEX.match(line)
     if not match:
         return None
@@ -22,6 +35,17 @@ def parse_line(line):
     }
 
 def align(tokens):
+    """Aligns the tokens into formatted lines.
+
+    This function takes a list of parsed tokens and aligns them into formatted
+    lines, ensuring consistent spacing and indentation.
+
+    Args:
+        tokens: A list of parsed tokens.
+
+    Returns:
+        A list of formatted lines.
+    """
     col1 = max(len(t["port"] + " " + t["zone1"]) for t in tokens)
     col2 = max(len(t["zone2"]) for t in tokens)
     col3 = max(len(t["zone3"]) for t in tokens if t["zone3"])
@@ -35,6 +59,20 @@ def align(tokens):
     return lines
 
 def format_content(content):
+    """Formats the given BARRELMAN content.
+
+    This function takes the content of a BARRELMAN file, parses each line,
+    and then aligns the parsed tokens into formatted lines.
+
+    Args:
+        content: The BARRELMAN content to format.
+
+    Returns:
+        A list of formatted lines.
+
+    Raises:
+        ValueError: If the content contains invalid BARRELMAN syntax.
+    """
     lines = content.strip().splitlines()
     tokens = []
     raw_lines = []
@@ -49,6 +87,12 @@ def format_content(content):
     return align(tokens)
 
 def main():
+    """Main function for the BARRELMAN formatter.
+
+    This function parses command-line arguments, reads the input file,
+    formats the content, and either checks the formatting or overwrites
+    the file with the formatted content.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("file", help=".bman file to format")
     parser.add_argument("--check", action="store_true", help="Check if file is properly formatted")

@@ -1,0 +1,64 @@
+---
+description: 
+globs: src/**/*.py,**/*.bman
+alwaysApply: false
+---
+---
+description: BARRELMAN is a custom domain-specific language (DSL) parser and toolkit that tokenizes, processes, and visualizes `.bman` files. The project provides lexical analysis, visualization tools, and various export formats.
+globs: src/**/*.py, **/*.bman
+---
+
+# Core Components
+
+### Lexer (src/lexer.py)
+- Contains `BarrelmanLexer` class for tokenizing BARRELMAN source code
+- Parses the unique BARRELMAN syntax with zones and declarations
+- Provides syntax tree rendering and highlighting functionality
+- Handles token generation from `.bman` source files
+
+### CLI Interface (src/cli.py)
+- Entry point for command-line usage of BARRELMAN
+- Processes arguments for different export formats and display options
+- Integrates with all components including preview server
+- Supports multiple output formats (HTML, Markdown, GraphViz DOT)
+
+### Preview Server (src/preview_server.py)
+- Flask-based web server for live previewing of BARRELMAN files
+- Renders tokens with syntax highlighting in browser
+- Provides a visual interface for viewing BARRELMAN syntax
+- Enhances development workflow with real-time visualization
+
+### Main Entry Point (src/main.py)
+- Simple wrapper that invokes the CLI functionality
+
+## Export Systems
+
+Located in `src/exporters/`:
+- HTML Exporter: Creates syntax-highlighted HTML output
+- Markdown Exporter: Generates markdown representation
+- GraphViz DOT Exporter: Produces graph visualizations of BARRELMAN syntax
+
+## Project Structure
+
+- `src/`: Core source code
+- `src/exporters/`: Output format generators
+- `src/static/`: Static assets (CSS, etc.) for preview server
+- Test directories with prefix `test_early_*`: Early development tests
+
+## BARRELMAN Syntax
+
+The language syntax has a unique structure with:
+- Declarations (:: or :^:)
+- Relations (text after declaration)
+- Modifiers (after % symbol)
+- Triggers (after -> symbol)
+- Indentation for nesting levels
+
+## Usage
+
+The toolkit can:
+1. Parse and validate .bman files
+2. Display syntax-highlighted output in terminal
+3. Export to HTML, Markdown, or GraphViz DOT formats
+4. Run an interactive preview server for visualizing files
+5. Generate syntax trees for visual representation

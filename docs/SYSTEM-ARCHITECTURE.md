@@ -1,11 +1,11 @@
+# BARRELMAN SYNTAX PROCESSING SYSTEM ARCHITECTURE
+
 ⸻
 
-BARRELMAN SYNTAX PROCESSING SYSTEM ARCHITECTURE
-
-Project Structure
+## Project Structure
 
 ```
-/Users/deadcoast/_coding_/python/BARRELMAN/src
+src/
 ├── exporters/
 │   ├── graphviz/
 │   │   ├── __init__.py
@@ -36,18 +36,38 @@ Project Structure
 ├── test_early_preview_server/
 │   ├── __init__.py
 │   └── test_early_run_preview_server.py
+├── vsix/
+│   ├── barrelman-extension.vsix.instructions.md
+│   ├── barrelman-theme-dark.json
+│   ├── barrelman-theme-light.json
+│   ├── barrelman.tmLanguage.json
+│   ├── barrelman_syntax_schema.json
+│   └── package.json
+├── github_actions/
+│   ├── tests/
+│   │   ├── testcases/
+│   │   │   ├── example_valid.bman
+│   │   │   ├── formatted.bman
+│   │   │   └── unformatted.bman
+│   │   ├── __init__.py
+│   │   └── bman_test_runner.py
+│   ├── __init__.py
+│   ├── bman-lint.yml
+│   ├── bmanfmt.py
+│   └── bmanlint.py
 ├── __init__.py
 ├── barrelman.bman
 ├── cli.py
 ├── lexer.py
 ├── main.py
 ├── preview_server.py
+├── rich_directory_tree_src.md
 └── tree.py
 ```
 
 ⸻
 
-COMPONENT OVERVIEW
+## COMPONENT OVERVIEW
 
 main.py – Entry Point
 • Responsibility: Delegates execution to cli.run_cli()
@@ -62,7 +82,8 @@ if __name__ == "__main__":
 
 ⸻
 
-cli.py – Command Interface Layer
+### cli.py – Command Interface Layer
+
 • Responsibility: Handles all CLI arguments, centralizes BarrelmanLexer parsing.
 • Exports parsed tokens to:
 • html_exporter
@@ -73,7 +94,8 @@ cli.py – Command Interface Layer
 
 ⸻
 
-lexer.py – Tokenization Core
+### lexer.py – Tokenization Core
+
 • Defines: BarrelmanLexer
 • Functionality:
 • Validates syntax (::, :^:, //, %, ->, spacing)
@@ -83,7 +105,8 @@ lexer.py – Tokenization Core
 
 ⸻
 
-preview_server.py – Live HTML Server
+### preview_server.py – Live HTML Server
+
 • Framework: Flask
 • Responsibility: Receives tokens, renders them via Jinja and barrelman.css
 • Output: Real-time syntax highlighting at http://localhost:5000
@@ -94,7 +117,7 @@ preview_server.py – Live HTML Server
 
 ⸻
 
-Exporters
+## Exporters
 
 html_exporter.py
 • Input: tokens, dark_mode toggle
@@ -103,20 +126,23 @@ html_exporter.py
 
 ⸻
 
-markdown_exporter.py
+### markdown_exporter.py
+
 • Output: Fenced ```barrelman block with raw syntax
 • No color, just formatting (for Obsidian/GitHub Markdown compatibility)
 
 ⸻
 
-dot_exporter.py
+### dot_exporter.py
+
 • Output: barrelman_tree.dot for use with Graphviz
 • Color-coded nodes depending on nesting_port
 • Includes: Label blocks for zone_2, zone_3, zone_4
 
 ⸻
 
-barrelman.css – Styling Layer
+### barrelman.css – Styling Layer
+
 • Mode Support: .dark and .light body classes
 • Visual Mappings:
 • .declaration → magenta
@@ -156,8 +182,3 @@ Design Principles
 • Graph-ready output: supports .dot format for static analysis
 
 ⸻
-
-Would you like:
-• A visual PNG/Graphviz version of the architecture?
-• A README.md auto-generated for repo publishing?
-• A setup.py to turn this into a pip-installable CLI tool?

@@ -1,0 +1,63 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# BARRELMAN Export Systems
+
+BARRELMAN provides multiple export and preview systems to visualize and share BARRELMAN language files in different formats.
+
+## HTML Exporter
+
+Located in `src/exporters/html_exporter.py`
+
+- Converts BARRELMAN tokens to syntax-highlighted HTML
+- Supports dark mode and light mode themes
+- Creates standalone HTML files that can be viewed in any browser
+- Used by the preview server for web-based visualization
+
+## Markdown Exporter
+
+Located in `src/exporters/markdown_exporter.py`
+
+- Generates markdown representation of BARRELMAN syntax
+- Creates human-readable text with appropriate formatting
+- Useful for documentation and sharing in text-based contexts
+- Preserves syntax structure with markdown formatting
+
+## GraphViz DOT Exporter
+
+Located in `src/exporters/graphviz/dot_exporter.py`
+
+- Creates graph visualization files in DOT format
+- Represents the hierarchical structure of BARRELMAN code
+- Can be processed with GraphViz tools to create visual diagrams
+- Useful for understanding complex BARRELMAN structures
+
+## Preview Server
+
+Located in `src/preview_server.py`
+
+- Flask-based web server for interactive viewing
+- Provides live syntax-highlighted rendering in a browser
+- Serves static assets from the `src/static` directory
+- Uses a compact HTML template for rendering
+- Accessible at http://localhost:5000 when running
+
+## Usage
+
+All exporters can be accessed through the CLI:
+
+```
+python -m src.main <file.bman> [--html] [--markdown] [--dot] [--preview] [--dark-mode]
+```
+
+- `--html`: Generate HTML export
+- `--markdown`: Generate Markdown export
+- `--dot`: Generate GraphViz DOT export
+- `--preview`: Start live preview server
+- `--dark-mode`: Use dark theme for HTML output
+
+## Integration
+
+The export systems are designed to work with the token structure produced by the `BarrelmanLexer`. The exporters process the token list to generate formatted output in their respective formats.

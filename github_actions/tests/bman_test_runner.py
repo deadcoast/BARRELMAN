@@ -5,6 +5,13 @@ from src.lexer import BarrelmanLexer
 
 TESTS_DIR = "./testcases"
 def run_tests():
+    """Runs the BARRELMAN test suite.
+
+    This function iterates through the test files in the testcases directory,
+    tokenizes each file using the BarrelmanLexer, and checks if the expected
+    outcome (pass or fail) matches the actual outcome. The results are
+    summarized at the end.
+    """
     results = {"pass": 0, "fail": 0}
     for file in os.listdir(TESTS_DIR):
         if not file.endswith(".bman"):
