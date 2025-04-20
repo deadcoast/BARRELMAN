@@ -110,7 +110,7 @@ The Hierarchical Nesting Port is a vertical operator `^` inserted into a New Cal
  :: EARTH // 1 OF 1 % ESCAPE PLANETARY SILENCE            # ERROR: Single space without `:^:`
 ```
 
-![Hierarchy Diagram](assets/img/hierarchy-color.png)
+![Hierarchy Diagram](assets/img/hierarchy-color-window.png)
 
 ## Practical Usage Example
 
