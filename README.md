@@ -134,6 +134,8 @@ The Hierarchical Nesting Port is a vertical operator `^` inserted into a New Cal
  :: EARTH STATUS // SELECTED FOR RECLAMATIO
 ```
 
+![BARRELMAN SYNTAX HIGHLIGHT](assets/img/syntax-highlight.png)
+
 ## Syntax Zone Details
 
 ### Zone 1: Declaration
