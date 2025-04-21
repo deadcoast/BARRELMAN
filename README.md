@@ -16,7 +16,7 @@ BARRELMAN is a hierarchical syntax language designed for relational data structu
 ├────────────────────────┼─────────────────────┼─────────────────────┼───────────────────┤
 │  [1.3] RELATION        │  [2.3] MODIFIER     │  [3.3] TRIGGER      │                   │
 ├────────────────────────┼─────────────────────┼─────────────────────┼───────────────────┤
-│  [1.4] NEW LINE        │                     │                     │                   │
+│  [1.4] LINE STRING     │                     │                     │                   │
 ├┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┤
 │                                                                                        │
 │             [1.3]                                                                      │
@@ -131,7 +131,7 @@ The Hierarchical Nesting Port is a vertical operator `^` inserted into a New Cal
   :: RACE[2] // DANGER LEVEL % ABSOLUTE -> INTERGALACTIC TRAVEL ACHIEVED
 :^: INTENT // SPECIES PRESERVATION % ANY MEANS NECESSARY
  :: TARGET ACQUISITION // EARTH BIOSPHERE % HABITABLE MATCH
- :: EARTH STATUS // SELECTED FOR RECLAMATIO
+ :: EARTH STATUS // SELECTED % RECLAMATION
 ```
 
 ![BARRELMAN SYNTAX HIGHLIGHT](assets/img/syntax-highlight.png)
