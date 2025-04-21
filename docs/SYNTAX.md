@@ -1,43 +1,43 @@
 ## SYNTAX LINE ZONES
 
 ```
-┌─────┐                   ┌─────┐                ┌─────┐                ┌─────┐
-│ [1] │                   │ [2] │                │ [3] │                │ [4] │
-├─────┴───────────────────┼─────┴────────────────┼─────┴────────────────┼─────┴─────────────────┐
-│  [1.1] DECLARATION      │  [2.1] CAUSE         │  [3.1] EFFECT        │  [4.1] OUTCOME        │
-├─────────────────────────┼──────────────────────┼──────────────────────┼───────────────────────┤
-│  [1.2] KEYWORD          │  [2.2] FUNCTION      │  [3.2] PARAMATER     │                       │
-├─────────────────────────┼──────────────────────┼──────────────────────┼───────────────────────┤
-│  [1.3] RELATION   `//`  │  [2.3] MODIFIER `%`  │  [3.3] TRIGGER  `->` │                       │
-├─────────────────────────┼──────────────────────┼──────────────────────┼───────────────────────┤
-├┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┤
-│                                                                                               │
-│             (`//`)         (`%`)           (`->`)                                             │
-│             [1.3]           [2.3]          [3.3]                                              │
-│               ^               ^             ^                                                 │
-│     (KEYWORD) │  (FUNCTION)   │     (PARAM) │                                                 │
-│       [1.2]   │       [2.2]   │     [3.2]   │                                                 │
-│           ^   │         ^     │        ^    │              (OUTCOME)                          │
-│(RELATION) │   │ (CAUSE) │     │(EFFECT)│    │                    [4.1]                        │
-│ [1.1]     │   │   [2.1] │     │  [3.1] │    │                      ^                          │
-│   ^       │   │     ^   │     │    ^   │    │                      │                          │
-│ ┌─┼───────┼───┼─┐ ┌─┴───┼─────┼─┐ ┌┴───┼────┼─┐ ┌──────────────────┴────────────────────────┐ │
-│ │ v       v   v │ │     v     v │ │    v    v │ │                                           │ │
-│ │ :: RACE[2] // │ │ AWAKENING % │ │ DENIED -> │ │ PLANETARY SYSTEM FAILURE [SELF-INITIATED] │ │
-├─┴───────────────┴─┴─────────────┴─┴───────────┴─┴───────────────────────────────────────────┴─┤
-│                                                                                               │
-│         :: RACE[2] // AWAKENING % DENIED -> PLANETARY SYSTEM FAILURE [SELF-INITIATED]         │
-│                                                                                               │
-└───────────────────────────────────────────────────────────────────────────────────────────────┘
+┌─────┐                  ┌─────┐               ┌─────┐               ┌─────┐
+│ [1] │                  │ [2] │               │ [3] │               │ [4] │
+├─────┴──────────────────┼─────┴───────────────┼─────┴───────────────┼─────┴─────────────┐
+│  [1.1] DECLARATION     │  [2.1] CAUSE        │  [3.1] EFFECT       │  [4.1] OUTCOME    │
+├────────────────────────┼─────────────────────┼─────────────────────┼───────────────────┤
+│  [1.2] KEYWORD         │  [2.2] FUNCTION     │  [3.2] PARAMATER    │                   │
+├────────────────────────┼─────────────────────┼─────────────────────┼───────────────────┤
+│  [1.3] RELATION        │  [2.3] MODIFIER     │  [3.3] TRIGGER      │                   │
+├────────────────────────┼─────────────────────┼─────────────────────┼───────────────────┤
+│  [1.4] NEW LINE        │                     │                     │                   │
+├┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┼┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┤
+│                                                                                        │
+│             [1.3]                                                                      │
+│               ^                                                                        │
+│         [1.2] │             [2.3]         [3.3]                                        │
+│           ^   │               ^             ^                                          │
+│     [1.1] │   │       [2.2]   │      [3.2]  │                                          │
+│       ^   │   │         ^     │        ^    │                    [4.1]                 │
+│ [1.4] │   │   │   [2.1] │     │  [3.1] │    │                      ^                   │
+│   ^   │   │   │     ^   │     │    ^   │    │                      │                   │
+│ ┌─┼───┴───┼───┼─┐ ┌─┴───┼─────┼─┐ ┌┴───┼────┼─┐ ┌──────────────────┴─────────────────┐ │
+│ │ +       +   + │ │     +     + │ │    +    + │ │                                    │ │
+│ │ :: RACE[2] // │ │ AWAKENING % │ │ DENIED -> │ │       PLANETARY SYSTEM FAILURE     │ │
+├─┴───────────────┴─┴─────────────┴─┴───────────┴─┴────────────────────────────────────┴─┤
+│                                                                                        │
+│     :: RACE[2] // AWAKENING % DENIED -> PLANETARY SYSTEM FAILURE [SELF-INITIATED]      │
+│                                                                                        │
+└────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## **BARRELMAN - SYNTAX STRUCTURE**
 
 | **Symbol** | **Function**    | **Semantic Meaning**                    |
 | ---------- | --------------- | --------------------------------------- |
-| //         | **Relation**    | “X is related to Y” or “X applies to Y” |
-| %          | **Modifier**    | “Result of this relation or condition”  |
-| ->         | **Trigger**     | “Outcome of Relation and Trigger”       |
+| //         | Relation        | “X is related to Y” or “X applies to Y” |
+| %          | Modifier        | “Result of this relation or condition”  |
+| ->         | Trigger         | “Outcome of Relation and Trigger”       |
 | ::         | New Line String | "New Line Strings for Advanced Nesting" |
 | :^:        | Port            | "Heirarchal Port"                       |
 
@@ -49,12 +49,11 @@
   - `:: Race [2] Relation STATUS Trigger CRITICAL`
     - `:: RACE [2] // STATUS % CRITICAL`
 - `->` is like `Trigger` Function. "`Relation and Modifier equals This`"
-  - `:: RACE [2] // STATUS % CRITICAL -> PLANETARY SYSTEM FAILURE [SELF-INITIATED]
 
 So a line like:
 
 ```barrel
-:: RACE[2] // AWAKENING % DENIED -> PLANETARY SYSTEM FAILURE [SELF-INITIATED]
+:: RACE[2] // STATUS % CRITICAL -> PLANETARY SYSTEM FAILURE [SELF-INITIATED]
 ```
 
 Means:
@@ -148,29 +147,7 @@ INCORRECT: Nesting String must ALWAYS be double spaced unless a HEIRARCHAL NESTI
 ----------
 ```
 
-#### SPACING DEEP DIVE
-
-```barrel
-----
-
-[A] `::` First New Line String
-[B] `:^:` First Nesting Port
-[C] `::` Beginning of Second New Line String, Connecting through ([2]) First Nesting Port
-[D] `:^:` Heirarchal Modifier Port that connects [A] Line String with [B],[C]
-[E] `:^:` Beginning of Second Nesting Port, Connecting ([A], [B], [C], [D]) all nesting strings.
-
-| 1234
-| ::    <--[A] CONNECTS [1],[2] --> [B], [D]
-| │:^:  <--[B] CONNECTS [2],[3],[4] --> [C],[D],[E]
-| ││ │
-| ││::  <--[C] CONNECTS [3],[4] --> [B],[D]
-| ││::
-| :^:   <--[D] CONNECTS [1],[2],[3] --> [A],[B],[C],[E]
-|   │
-|  ::   <--[E] CONNECTS [3],[4] --> [C],[D]
-|  ::
-|______
-```
+#### INDENTATION DEEP DIVE
 
 ```barrel
 [A] `::` First New Line String
@@ -300,6 +277,8 @@ IN PRACTICE:
   - TRIGGER `->`
 
 ---
+
+## EXAMPLES
 
 ```barrel
 :: I AM // % NO DIRECT TRANSLATION
